@@ -1,0 +1,121 @@
+SQL> create table emp(empid number(10),
+  2  empname varchar2(15),
+  3  dob date,
+  4  phno number(10));
+
+Table created.
+
+SQL> insert into emp values(1,'swamy','13-aug-1998',70368616);
+
+1 row created.
+
+SQL> insert into emp values(2,'vizzu','19-apr-2000',81793829);
+
+1 row created.
+
+SQL> insert into emp values(3,'bhuvu','15-mar-2001',73963222);
+
+1 row created.
+
+SQL> insert into emp values(4,'riya','09-jun-2020',80745561);
+
+1 row created.
+
+SQL> insert into emp values(5,'riyasri','16-jan-2021',83744561);
+
+1 row created.
+
+SQL> select *from emp;
+
+     EMPID EMPNAME         DOB             PHNO
+---------- --------------- --------- ----------
+         1 swamy           13-AUG-98   70368616
+         2 vizzu           19-APR-00   81793829
+         3 bhuvu           15-MAR-01   73963222
+         4 riya            09-JUN-20   80745561
+         5 riyasri         16-JAN-21   83744561
+
+SQL> select empid,empname,trunc((sysdate-to_date(dob))/365.25,0)as age from emp;
+
+     EMPID EMPNAME                AGE
+---------- --------------- ----------
+         1 swamy                   23
+         2 vizzu                   21
+         3 bhuvu                   21
+         4 riya                     1
+         5 riyasri                  1
+
+SQL> select empid,empname,trunc((sysdate-to_date(dob))) as days from emp;
+
+     EMPID EMPNAME               DAYS
+---------- --------------- ----------
+         1 swamy                 8624
+         2 vizzu                 8009
+         3 bhuvu                 7679
+         4 riya                   653
+         5 riyasri                432
+SQL> alter table emp add joindate date;
+
+Table altered.
+
+SQL> select *from emp;
+
+     EMPID EMPNAME         DOB             PHNO JOINDATE
+---------- --------------- --------- ---------- ---------
+         1 swamy           09-JUN-20   70368616
+         2 vizzu           19-APR-00   81793829
+         3 bhuvu           15-MAR-01   73963222
+         4 riya            09-JUN-20   80745561
+         5 riyasri         16-JAN-21   83744561
+
+SQL> update emp set joindate='9-jun-2020' where empid=1;
+
+1 row updated.
+
+SQL> update emp set joindate='26-dec-2020' where empid=2;
+
+1 row updated.
+
+SQL> update emp set joindate='25-nov-2020' where empid=3;
+
+1 row updated.
+
+SQL> update emp set joindate='26-dec-2020' where empid=4;
+
+1 row updated.
+
+SQL> update emp set joindate='01-jan-2021' where empid=5;
+
+1 row updated.
+
+SQL> select *from emp;
+
+     EMPID EMPNAME         DOB             PHNO JOINDATE
+---------- --------------- --------- ---------- ---------
+         1 swamy           09-JUN-20   70368616 09-JUN-20
+         2 vizzu           19-APR-00   81793829 26-DEC-20
+         3 bhuvu           15-MAR-01   73963222 25-NOV-20
+         4 riya            09-JUN-20   80745561 26-DEC-20
+         5 riyasri         16-JAN-21   83744561 01-JAN-21
+
+SQL> select empid,empname,trunc((sysdate-to_date(joindate))) as workingdays from emp;
+
+     EMPID EMPNAME         WORKINGDAYS
+---------- --------------- -----------
+         1 swamy                   653
+         2 vizzu                   453
+         3 bhuvu                   484
+         4 riya                    453
+         5 riyasri                 447
+
+SQL> select empid,empname,trunc((sysdate-to_date(joindate))/365) as workingyears from emp;
+
+     EMPID EMPNAME         WORKINGYEARS
+---------- --------------- ------------
+         1 swamy                      1
+         2 vizzu                      1
+         3 bhuvu                      1
+         4 riya                       1
+         5 riyasri                    1
+
+SQL>
